@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package cl.sistemarce.beans;
-
 
 import cl.sistemarce.entity.Sexo;
 import cl.sistemarce.session.SexoFacade;
@@ -13,8 +11,12 @@ import cl.sistemarce.session.SexoFacadeLocal;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -23,6 +25,7 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class sexoBean {
+
     //declaracion de variables
     @EJB
     private final SexoFacadeLocal sexoFacade;
@@ -30,18 +33,40 @@ public class sexoBean {
     private List<Sexo> sexos;
     private List<Sexo> filterSexos;
     private Sexo selectedSexo;
-    
+
     //constructor
     public sexoBean() {
         sexoFacade = new SexoFacade();
     }
-    
+
     //postconstructor
     @PostConstruct
-    public void myInit(){
+    public void myInit() {
         sexos = sexoFacade.findAll();
+        sexo = new Sexo();
     }
-    
+
+    //metodos
+    public void createSexo(ActionEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext reqContext = RequestContext.getCurrentInstance();
+        boolean creado = false;
+        String formulario = "";
+        String dialog = "";
+        if (sexo.getSexoDescripcion().equalsIgnoreCase("")) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe Ingresar Datos En Descripcion Sexo", null));
+        } else {
+            sexoFacade.create(sexo);
+            formulario = "formCreateCiudad";
+            dialog = "dlg1";
+            creado = true;
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos Correctamente Creados", null));
+            reqContext.addCallbackParam("createSexos", formulario);
+            reqContext.addCallbackParam("creado", creado);
+            reqContext.addCallbackParam("dialog", dialog);
+        }
+    }
+
     //get and set
     public Sexo getSexo() {
         return sexo;
@@ -74,6 +99,5 @@ public class sexoBean {
     public void setSelectedSexo(Sexo selectedSexo) {
         this.selectedSexo = selectedSexo;
     }
-    
-    
+
 }

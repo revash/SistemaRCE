@@ -13,14 +13,14 @@
             <ui:define name="content">
                 <f:view>
                     <div id="content" style="margin-left:0px !important;">
-                        <h:form>
-                           <p:growl id="msgs" showSummary="true" life="3000"  /> 
+                        <p:growl id="growl" showSummary="true" life="3000"  />  
+                        <h:form id="listaSexos2">
                             <div class="menubar">
                                 <div class="sidebar-toggler visible-xs">
                                     <i class="ion-navicon"></i>
                                 </div>
                                 <div class="page-title">
-                                    Lista de Sexos
+                                    Lista Sexos
                                 </div>
                             </div>
                             <div class="content-wrapper">  
@@ -38,6 +38,10 @@
                                     filteredValue="#{sexoBean.filterSexos}"
                                     emptyMessage="No se encontraron resultados">
                                     <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Buscar en todas las Columnas" />
+                                            <p:inputText id="globalFilter" onkeyup="PF('tabla').filter()" style="width:300px; text-transform: uppercase;" placeholder="Ingrese palabra"/>
+                                        </p:outputPanel>
                                     </f:facet>
                                     <p:column filterBy="#{item.sexoCodigo}">
                                         <f:facet name="header">
@@ -53,18 +57,18 @@
                                     </p:column>
                                     <f:facet name="footer">
                                         <p:commandButton process="listaSexos" icon="ui-icon-document" 
-                                                         value="Crear"  title="Crear" onclick="PF('dlg1').show()"/>
+                                                         value="Crear Sexo"  title="Crear" onclick="PF('dlg1').show()"/>
                                         <p:commandButton process="listaSexos" icon="ui-icon-pencil"  id="btnEditarComuna"
-                                                         value="Editar"  title="Editar"
-                                                         />   
+                                                         value="Editar Sexo"  title="Editar"/>   
                                     </f:facet>
                                 </p:dataTable>
+                            </div>
                             <p:dialog header="Crear Sexo" widgetVar="dlg1" 
-                                  width="600" resizable="false" 
-                                position="center">
+                                      width="600" resizable="false" 
+                                      position="center">
                                 <div id="content" style="margin-left: 0px !important;">
                                     <fieldset>
-                                        <h:form styleClass="form-horizontal" id="crearSexo" >
+                                        <h:form styleClass="form-horizontal" id="createSexos" >
                                             <div class="form-group">
                                                 <p:outputLabel value="SexoDescripcion:" for="sexoDescripcion" styleClass="col-md-4 control-label" />
                                                 <div class="col-md-4">
@@ -74,8 +78,9 @@
                                             <div class="form-group">
                                                 <label class="col-md-4 control-label"></label>
                                                 <div class="col-md-4">
-                                                    <p:commandButton value="Guardar" actionListener="#{fixme}" update="msgs" styleClass="btn btn-success" />
-                                                    <p:commandButton value="Cancelar" onclick="volver();" styleClass="btn btn-danger" />
+                                                    <p:commandButton value="Guardar" actionListener="#{sexoBean.createSexo(event)}" update=":growl, :listaSexos2:listaSexos" 
+                                                                     oncomplete="ocultar(xhr, status, args)" styleClass="btn btn-success" />
+                                                    <p:commandButton value="Cancelar" onclick="PF('dlg1').hide()" styleClass="btn btn-danger" />
                                                 </div>
                                             </div>
                                         </h:form>
@@ -84,11 +89,10 @@
 
 
                             </p:dialog>
-                            
-                            </div>
                         </h:form>
                     </div>
                 </f:view>
+
 
             </ui:define>
 
