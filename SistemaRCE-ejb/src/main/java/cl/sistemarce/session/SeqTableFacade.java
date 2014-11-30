@@ -6,7 +6,7 @@
 
 package cl.sistemarce.session;
 
-import cl.sistemarce.entity.Registroclinicoobstetrico;
+import cl.sistemarce.entity.SeqTable;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author AndresEduardo
  */
 @Stateless
-public class RegistroclinicoobstetricoFacade extends AbstractFacade<Registroclinicoobstetrico> implements RegistroclinicoobstetricoFacadeLocal {
+public class SeqTableFacade extends AbstractFacade<SeqTable> implements SeqTableFacadeLocal {
     @PersistenceContext(unitName = "cl_SistemaRCE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class RegistroclinicoobstetricoFacade extends AbstractFacade<Registroclin
         return em;
     }
 
-    public RegistroclinicoobstetricoFacade() {
-        super(Registroclinicoobstetrico.class);
+    public SeqTableFacade() {
+        super(SeqTable.class);
     }
     
 }

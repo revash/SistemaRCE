@@ -13,7 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -34,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Receta.findAll", query = "SELECT r FROM Receta r"),
     @NamedQuery(name = "Receta.findByRecetaId", query = "SELECT r FROM Receta r WHERE r.recetaId = :recetaId"),
+    @NamedQuery(name = "Receta.findByControlId", query = "SELECT r FROM Receta r WHERE r.controlId = :controlId"),
     @NamedQuery(name = "Receta.findByRecetaFecha", query = "SELECT r FROM Receta r WHERE r.recetaFecha = :recetaFecha"),
     @NamedQuery(name = "Receta.findByRecetaCuerpo", query = "SELECT r FROM Receta r WHERE r.recetaCuerpo = :recetaCuerpo")})
 public class Receta implements Serializable {
@@ -43,27 +43,19 @@ public class Receta implements Serializable {
     @NotNull
     @Column(name = "receta_id")
     private Integer recetaId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "control_id")
+    private int controlId;
     @Column(name = "receta_fecha")
     @Temporal(TemporalType.DATE)
     private Date recetaFecha;
     @Size(max = 2147483647)
     @Column(name = "receta_cuerpo")
     private String recetaCuerpo;
-    @JoinColumns({
-        @JoinColumn(name = "profesionalrut", referencedColumnName = "profesionalrut"),
-        @JoinColumn(name = "profesional_dv", referencedColumnName = "profesional_dv")})
-    @ManyToOne(optional = false)
-    private Profesional profesional;
-    @JoinColumns({
-        @JoinColumn(name = "persona_rut", referencedColumnName = "persona_rut"),
-        @JoinColumn(name = "persona_dv", referencedColumnName = "persona_dv"),
-        @JoinColumn(name = "nacionalidad_codigo", referencedColumnName = "nacionalidad_codigo"),
-        @JoinColumn(name = "ficha_numero", referencedColumnName = "ficha_numero")})
-    @ManyToOne(optional = false)
-    private Paciente paciente;
-    @JoinColumn(name = "episodio_numero", referencedColumnName = "episodio_numero")
-    @ManyToOne(optional = false)
-    private Episodioclinicoobstetrico episodioNumero;
+    @JoinColumn(name = "correltativocontrolobstetrico", referencedColumnName = "correltativocontrolobstetrico")
+    @ManyToOne
+    private Controlobstetrico correltativocontrolobstetrico;
 
     public Receta() {
     }
@@ -72,12 +64,25 @@ public class Receta implements Serializable {
         this.recetaId = recetaId;
     }
 
+    public Receta(Integer recetaId, int controlId) {
+        this.recetaId = recetaId;
+        this.controlId = controlId;
+    }
+
     public Integer getRecetaId() {
         return recetaId;
     }
 
     public void setRecetaId(Integer recetaId) {
         this.recetaId = recetaId;
+    }
+
+    public int getControlId() {
+        return controlId;
+    }
+
+    public void setControlId(int controlId) {
+        this.controlId = controlId;
     }
 
     public Date getRecetaFecha() {
@@ -96,28 +101,12 @@ public class Receta implements Serializable {
         this.recetaCuerpo = recetaCuerpo;
     }
 
-    public Profesional getProfesional() {
-        return profesional;
+    public Controlobstetrico getCorreltativocontrolobstetrico() {
+        return correltativocontrolobstetrico;
     }
 
-    public void setProfesional(Profesional profesional) {
-        this.profesional = profesional;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public Episodioclinicoobstetrico getEpisodioNumero() {
-        return episodioNumero;
-    }
-
-    public void setEpisodioNumero(Episodioclinicoobstetrico episodioNumero) {
-        this.episodioNumero = episodioNumero;
+    public void setCorreltativocontrolobstetrico(Controlobstetrico correltativocontrolobstetrico) {
+        this.correltativocontrolobstetrico = correltativocontrolobstetrico;
     }
 
     @Override

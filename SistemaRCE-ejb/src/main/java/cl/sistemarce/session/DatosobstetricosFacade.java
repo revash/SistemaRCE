@@ -6,7 +6,7 @@
 
 package cl.sistemarce.session;
 
-import cl.sistemarce.entity.Tipopartos;
+import cl.sistemarce.entity.Datosobstetricos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author AndresEduardo
  */
 @Stateless
-public class TipopartosFacade extends AbstractFacade<Tipopartos> implements TipopartosFacadeLocal {
+public class DatosobstetricosFacade extends AbstractFacade<Datosobstetricos> implements DatosobstetricosFacadeLocal {
     @PersistenceContext(unitName = "cl_SistemaRCE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class TipopartosFacade extends AbstractFacade<Tipopartos> implements Tipo
         return em;
     }
 
-    public TipopartosFacade() {
-        super(Tipopartos.class);
+    public DatosobstetricosFacade() {
+        super(Datosobstetricos.class);
     }
     
 }

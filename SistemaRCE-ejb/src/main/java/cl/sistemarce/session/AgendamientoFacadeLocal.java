@@ -6,7 +6,7 @@
 
 package cl.sistemarce.session;
 
-import cl.sistemarce.entity.Partos;
+import cl.sistemarce.entity.Agendamiento;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,19 +15,19 @@ import javax.ejb.Local;
  * @author AndresEduardo
  */
 @Local
-public interface PartosFacadeLocal {
+public interface AgendamientoFacadeLocal {
 
-    void create(Partos partos);
+    void create(Agendamiento agendamiento);
 
-    void edit(Partos partos);
+    void edit(Agendamiento agendamiento);
 
-    void remove(Partos partos);
+    void remove(Agendamiento agendamiento);
 
-    Partos find(Object id);
+    Agendamiento find(Object id);
 
-    List<Partos> findAll();
+    List<Agendamiento> findAll();
 
-    List<Partos> findRange(int[] range);
+    List<Agendamiento> findRange(int[] range);
 
     int count();
     

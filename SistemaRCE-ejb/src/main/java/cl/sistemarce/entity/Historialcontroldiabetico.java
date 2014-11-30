@@ -78,9 +78,9 @@ public class Historialcontroldiabetico implements Serializable {
     private Integer hcdGicemiaPostAlm;
     @Column(name = "hcd_observaciones")
     private Integer hcdObservaciones;
-    @JoinColumn(name = "cd_id", referencedColumnName = "cd_id")
-    @ManyToOne
-    private Controldiabetico cdId;
+    @JoinColumn(name = "correlativocontroldiabetico", referencedColumnName = "correlativocontroldiabetico")
+    @ManyToOne(optional = false)
+    private Controldiabetico correlativocontroldiabetico;
 
     public Historialcontroldiabetico() {
     }
@@ -185,12 +185,12 @@ public class Historialcontroldiabetico implements Serializable {
         this.hcdObservaciones = hcdObservaciones;
     }
 
-    public Controldiabetico getCdId() {
-        return cdId;
+    public Controldiabetico getCorrelativocontroldiabetico() {
+        return correlativocontroldiabetico;
     }
 
-    public void setCdId(Controldiabetico cdId) {
-        this.cdId = cdId;
+    public void setCorrelativocontroldiabetico(Controldiabetico correlativocontroldiabetico) {
+        this.correlativocontroldiabetico = correlativocontroldiabetico;
     }
 
     @Override

@@ -10,11 +10,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Controldiabetico.findAll", query = "SELECT c FROM Controldiabetico c"),
-    @NamedQuery(name = "Controldiabetico.findByCdId", query = "SELECT c FROM Controldiabetico c WHERE c.cdId = :cdId"),
+    @NamedQuery(name = "Controldiabetico.findByCorrelativocontroldiabetico", query = "SELECT c FROM Controldiabetico c WHERE c.correlativocontroldiabetico = :correlativocontroldiabetico"),
     @NamedQuery(name = "Controldiabetico.findByCdFecha", query = "SELECT c FROM Controldiabetico c WHERE c.cdFecha = :cdFecha"),
     @NamedQuery(name = "Controldiabetico.findByCdAntDiabFam", query = "SELECT c FROM Controldiabetico c WHERE c.cdAntDiabFam = :cdAntDiabFam"),
     @NamedQuery(name = "Controldiabetico.findByCdAntecedentesMorbidos", query = "SELECT c FROM Controldiabetico c WHERE c.cdAntecedentesMorbidos = :cdAntecedentesMorbidos"),
@@ -46,14 +46,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Controldiabetico.findByCdTipoTratamiento", query = "SELECT c FROM Controldiabetico c WHERE c.cdTipoTratamiento = :cdTipoTratamiento"),
     @NamedQuery(name = "Controldiabetico.findByCdHospitalizacion", query = "SELECT c FROM Controldiabetico c WHERE c.cdHospitalizacion = :cdHospitalizacion"),
     @NamedQuery(name = "Controldiabetico.findByCdRegimenExclisivo", query = "SELECT c FROM Controldiabetico c WHERE c.cdRegimenExclisivo = :cdRegimenExclisivo"),
-    @NamedQuery(name = "Controldiabetico.findByCdOtros", query = "SELECT c FROM Controldiabetico c WHERE c.cdOtros = :cdOtros")})
+    @NamedQuery(name = "Controldiabetico.findByCdOtros", query = "SELECT c FROM Controldiabetico c WHERE c.cdOtros = :cdOtros"),
+    @NamedQuery(name = "Controldiabetico.findByProfesionalRut", query = "SELECT c FROM Controldiabetico c WHERE c.profesionalRut = :profesionalRut"),
+    @NamedQuery(name = "Controldiabetico.findByProfesionalDv", query = "SELECT c FROM Controldiabetico c WHERE c.profesionalDv = :profesionalDv")})
 public class Controldiabetico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "cd_id")
-    private Integer cdId;
+    @Column(name = "correlativocontroldiabetico")
+    private Integer correlativocontroldiabetico;
     @Column(name = "cd_fecha")
     @Temporal(TemporalType.DATE)
     private Date cdFecha;
@@ -82,30 +84,30 @@ public class Controldiabetico implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "cd_otros")
     private String cdOtros;
-    @JoinColumns({
-        @JoinColumn(name = "profesionalrut", referencedColumnName = "profesionalrut"),
-        @JoinColumn(name = "profesional_dv", referencedColumnName = "profesional_dv")})
-    @ManyToOne(optional = false)
-    private Profesional profesional;
-    @JoinColumn(name = "episodio_numero", referencedColumnName = "episodio_numero")
-    @ManyToOne(optional = false)
-    private Episodioclinicoobstetrico episodioNumero;
-    @OneToMany(mappedBy = "cdId")
+    @Column(name = "profesional_rut")
+    private Integer profesionalRut;
+    @Size(max = 1)
+    @Column(name = "profesional_dv")
+    private String profesionalDv;
+    @JoinColumn(name = "numerocorrelativo", referencedColumnName = "numerocorrelativo")
+    @ManyToOne
+    private Episodioclinico numerocorrelativo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "correlativocontroldiabetico")
     private List<Historialcontroldiabetico> historialcontroldiabeticoList;
 
     public Controldiabetico() {
     }
 
-    public Controldiabetico(Integer cdId) {
-        this.cdId = cdId;
+    public Controldiabetico(Integer correlativocontroldiabetico) {
+        this.correlativocontroldiabetico = correlativocontroldiabetico;
     }
 
-    public Integer getCdId() {
-        return cdId;
+    public Integer getCorrelativocontroldiabetico() {
+        return correlativocontroldiabetico;
     }
 
-    public void setCdId(Integer cdId) {
-        this.cdId = cdId;
+    public void setCorrelativocontroldiabetico(Integer correlativocontroldiabetico) {
+        this.correlativocontroldiabetico = correlativocontroldiabetico;
     }
 
     public Date getCdFecha() {
@@ -188,20 +190,28 @@ public class Controldiabetico implements Serializable {
         this.cdOtros = cdOtros;
     }
 
-    public Profesional getProfesional() {
-        return profesional;
+    public Integer getProfesionalRut() {
+        return profesionalRut;
     }
 
-    public void setProfesional(Profesional profesional) {
-        this.profesional = profesional;
+    public void setProfesionalRut(Integer profesionalRut) {
+        this.profesionalRut = profesionalRut;
     }
 
-    public Episodioclinicoobstetrico getEpisodioNumero() {
-        return episodioNumero;
+    public String getProfesionalDv() {
+        return profesionalDv;
     }
 
-    public void setEpisodioNumero(Episodioclinicoobstetrico episodioNumero) {
-        this.episodioNumero = episodioNumero;
+    public void setProfesionalDv(String profesionalDv) {
+        this.profesionalDv = profesionalDv;
+    }
+
+    public Episodioclinico getNumerocorrelativo() {
+        return numerocorrelativo;
+    }
+
+    public void setNumerocorrelativo(Episodioclinico numerocorrelativo) {
+        this.numerocorrelativo = numerocorrelativo;
     }
 
     @XmlTransient
@@ -216,7 +226,7 @@ public class Controldiabetico implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cdId != null ? cdId.hashCode() : 0);
+        hash += (correlativocontroldiabetico != null ? correlativocontroldiabetico.hashCode() : 0);
         return hash;
     }
 
@@ -227,7 +237,7 @@ public class Controldiabetico implements Serializable {
             return false;
         }
         Controldiabetico other = (Controldiabetico) object;
-        if ((this.cdId == null && other.cdId != null) || (this.cdId != null && !this.cdId.equals(other.cdId))) {
+        if ((this.correlativocontroldiabetico == null && other.correlativocontroldiabetico != null) || (this.correlativocontroldiabetico != null && !this.correlativocontroldiabetico.equals(other.correlativocontroldiabetico))) {
             return false;
         }
         return true;
@@ -235,7 +245,7 @@ public class Controldiabetico implements Serializable {
 
     @Override
     public String toString() {
-        return "cl.sistemarce.entity.Controldiabetico[ cdId=" + cdId + " ]";
+        return "cl.sistemarce.entity.Controldiabetico[ correlativocontroldiabetico=" + correlativocontroldiabetico + " ]";
     }
     
 }

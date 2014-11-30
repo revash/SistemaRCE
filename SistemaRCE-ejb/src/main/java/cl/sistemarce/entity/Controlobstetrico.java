@@ -10,12 +10,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -37,167 +35,231 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Controlobstetrico.findAll", query = "SELECT c FROM Controlobstetrico c"),
-    @NamedQuery(name = "Controlobstetrico.findByControlId", query = "SELECT c FROM Controlobstetrico c WHERE c.controlId = :controlId"),
-    @NamedQuery(name = "Controlobstetrico.findByControlFecha", query = "SELECT c FROM Controlobstetrico c WHERE c.controlFecha = :controlFecha"),
-    @NamedQuery(name = "Controlobstetrico.findByControlPa", query = "SELECT c FROM Controlobstetrico c WHERE c.controlPa = :controlPa"),
-    @NamedQuery(name = "Controlobstetrico.findByControlTemp", query = "SELECT c FROM Controlobstetrico c WHERE c.controlTemp = :controlTemp"),
-    @NamedQuery(name = "Controlobstetrico.findByControlPulso", query = "SELECT c FROM Controlobstetrico c WHERE c.controlPulso = :controlPulso"),
-    @NamedQuery(name = "Controlobstetrico.findByControlTalla", query = "SELECT c FROM Controlobstetrico c WHERE c.controlTalla = :controlTalla"),
-    @NamedQuery(name = "Controlobstetrico.findByControlImc", query = "SELECT c FROM Controlobstetrico c WHERE c.controlImc = :controlImc"),
-    @NamedQuery(name = "Controlobstetrico.findByControlExamFisico", query = "SELECT c FROM Controlobstetrico c WHERE c.controlExamFisico = :controlExamFisico"),
-    @NamedQuery(name = "Controlobstetrico.findByControlIndicaciones", query = "SELECT c FROM Controlobstetrico c WHERE c.controlIndicaciones = :controlIndicaciones"),
-    @NamedQuery(name = "Controlobstetrico.findByControlObservaciones", query = "SELECT c FROM Controlobstetrico c WHERE c.controlObservaciones = :controlObservaciones"),
-    @NamedQuery(name = "Controlobstetrico.findByControlEdema", query = "SELECT c FROM Controlobstetrico c WHERE c.controlEdema = :controlEdema"),
-    @NamedQuery(name = "Controlobstetrico.findByControlEdadEmbarazo", query = "SELECT c FROM Controlobstetrico c WHERE c.controlEdadEmbarazo = :controlEdadEmbarazo")})
+    @NamedQuery(name = "Controlobstetrico.findByCorreltativocontrolobstetrico", query = "SELECT c FROM Controlobstetrico c WHERE c.correltativocontrolobstetrico = :correltativocontrolobstetrico"),
+    @NamedQuery(name = "Controlobstetrico.findByFecha", query = "SELECT c FROM Controlobstetrico c WHERE c.fecha = :fecha"),
+    @NamedQuery(name = "Controlobstetrico.findByPeso", query = "SELECT c FROM Controlobstetrico c WHERE c.peso = :peso"),
+    @NamedQuery(name = "Controlobstetrico.findByPa", query = "SELECT c FROM Controlobstetrico c WHERE c.pa = :pa"),
+    @NamedQuery(name = "Controlobstetrico.findByTemperatura", query = "SELECT c FROM Controlobstetrico c WHERE c.temperatura = :temperatura"),
+    @NamedQuery(name = "Controlobstetrico.findByPulso", query = "SELECT c FROM Controlobstetrico c WHERE c.pulso = :pulso"),
+    @NamedQuery(name = "Controlobstetrico.findByTalla", query = "SELECT c FROM Controlobstetrico c WHERE c.talla = :talla"),
+    @NamedQuery(name = "Controlobstetrico.findByImc", query = "SELECT c FROM Controlobstetrico c WHERE c.imc = :imc"),
+    @NamedQuery(name = "Controlobstetrico.findByExamenFisico", query = "SELECT c FROM Controlobstetrico c WHERE c.examenFisico = :examenFisico"),
+    @NamedQuery(name = "Controlobstetrico.findByIndicaciones", query = "SELECT c FROM Controlobstetrico c WHERE c.indicaciones = :indicaciones"),
+    @NamedQuery(name = "Controlobstetrico.findByObservaciones", query = "SELECT c FROM Controlobstetrico c WHERE c.observaciones = :observaciones"),
+    @NamedQuery(name = "Controlobstetrico.findByEdema", query = "SELECT c FROM Controlobstetrico c WHERE c.edema = :edema"),
+    @NamedQuery(name = "Controlobstetrico.findByEdadEmbarazo", query = "SELECT c FROM Controlobstetrico c WHERE c.edadEmbarazo = :edadEmbarazo"),
+    @NamedQuery(name = "Controlobstetrico.findByProfesionalRut", query = "SELECT c FROM Controlobstetrico c WHERE c.profesionalRut = :profesionalRut"),
+    @NamedQuery(name = "Controlobstetrico.findByProfesionalDv", query = "SELECT c FROM Controlobstetrico c WHERE c.profesionalDv = :profesionalDv"),
+    @NamedQuery(name = "Controlobstetrico.findByHistoria", query = "SELECT c FROM Controlobstetrico c WHERE c.historia = :historia"),
+    @NamedQuery(name = "Controlobstetrico.findByEstado", query = "SELECT c FROM Controlobstetrico c WHERE c.estado = :estado")})
 public class Controlobstetrico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "control_id")
-    private Integer controlId;
-    @Column(name = "control_fecha")
+    @Column(name = "correltativocontrolobstetrico")
+    private Integer correltativocontrolobstetrico;
+    @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
-    private Date controlFecha;
-    @Column(name = "control_pa")
-    private Integer controlPa;
+    private Date fecha;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "control_temp")
-    private Double controlTemp;
-    @Column(name = "control_pulso")
-    private Integer controlPulso;
-    @Column(name = "control_talla")
-    private Double controlTalla;
-    @Column(name = "control_imc")
-    private Double controlImc;
+    @Column(name = "peso")
+    private Double peso;
+    @Column(name = "pa")
+    private Integer pa;
+    @Column(name = "temperatura")
+    private Double temperatura;
+    @Column(name = "pulso")
+    private Integer pulso;
+    @Column(name = "talla")
+    private Double talla;
+    @Column(name = "imc")
+    private Double imc;
     @Size(max = 2147483647)
-    @Column(name = "control_exam_fisico")
-    private String controlExamFisico;
+    @Column(name = "examen_fisico")
+    private String examenFisico;
     @Size(max = 2147483647)
-    @Column(name = "control_indicaciones")
-    private String controlIndicaciones;
+    @Column(name = "indicaciones")
+    private String indicaciones;
     @Size(max = 2147483647)
-    @Column(name = "control_observaciones")
-    private String controlObservaciones;
+    @Column(name = "observaciones")
+    private String observaciones;
+    @Column(name = "edema")
+    private Short edema;
+    @Column(name = "edad_embarazo")
+    private Double edadEmbarazo;
+    @Column(name = "profesional_rut")
+    private Integer profesionalRut;
+    @Size(max = 1)
+    @Column(name = "profesional_dv")
+    private String profesionalDv;
     @Size(max = 2147483647)
-    @Column(name = "control_edema")
-    private String controlEdema;
-    @Column(name = "control_edad_embarazo")
-    private Integer controlEdadEmbarazo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlId")
+    @Column(name = "historia")
+    private String historia;
+    @Column(name = "estado")
+    private Short estado;
+    @OneToMany(mappedBy = "correltativocontrolobstetrico")
+    private List<Receta> recetaList;
+    @OneToMany(mappedBy = "correltativocontrolobstetrico")
     private List<Diagnosticos> diagnosticosList;
-    @JoinColumns({
-        @JoinColumn(name = "profesionalrut", referencedColumnName = "profesionalrut"),
-        @JoinColumn(name = "profesional_dv", referencedColumnName = "profesional_dv")})
-    @ManyToOne
-    private Profesional profesional;
-    @JoinColumn(name = "episodio_numero", referencedColumnName = "episodio_numero")
+    @OneToMany(mappedBy = "correltativocontrolobstetrico")
+    private List<Tratamiento> tratamientoList;
+    @JoinColumn(name = "numerocorrelativo", referencedColumnName = "numerocorrelativo")
     @ManyToOne(optional = false)
-    private Episodioclinicoobstetrico episodioNumero;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlId")
+    private Episodioclinico numerocorrelativo;
+    @OneToMany(mappedBy = "correltativocontrolobstetrico")
     private List<Hipotesis> hipotesisList;
 
     public Controlobstetrico() {
     }
 
-    public Controlobstetrico(Integer controlId) {
-        this.controlId = controlId;
+    public Controlobstetrico(Integer correltativocontrolobstetrico) {
+        this.correltativocontrolobstetrico = correltativocontrolobstetrico;
     }
 
-    public Integer getControlId() {
-        return controlId;
+    public Integer getCorreltativocontrolobstetrico() {
+        return correltativocontrolobstetrico;
     }
 
-    public void setControlId(Integer controlId) {
-        this.controlId = controlId;
+    public void setCorreltativocontrolobstetrico(Integer correltativocontrolobstetrico) {
+        this.correltativocontrolobstetrico = correltativocontrolobstetrico;
     }
 
-    public Date getControlFecha() {
-        return controlFecha;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setControlFecha(Date controlFecha) {
-        this.controlFecha = controlFecha;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public Integer getControlPa() {
-        return controlPa;
+    public Double getPeso() {
+        return peso;
     }
 
-    public void setControlPa(Integer controlPa) {
-        this.controlPa = controlPa;
+    public void setPeso(Double peso) {
+        this.peso = peso;
     }
 
-    public Double getControlTemp() {
-        return controlTemp;
+    public Integer getPa() {
+        return pa;
     }
 
-    public void setControlTemp(Double controlTemp) {
-        this.controlTemp = controlTemp;
+    public void setPa(Integer pa) {
+        this.pa = pa;
     }
 
-    public Integer getControlPulso() {
-        return controlPulso;
+    public Double getTemperatura() {
+        return temperatura;
     }
 
-    public void setControlPulso(Integer controlPulso) {
-        this.controlPulso = controlPulso;
+    public void setTemperatura(Double temperatura) {
+        this.temperatura = temperatura;
     }
 
-    public Double getControlTalla() {
-        return controlTalla;
+    public Integer getPulso() {
+        return pulso;
     }
 
-    public void setControlTalla(Double controlTalla) {
-        this.controlTalla = controlTalla;
+    public void setPulso(Integer pulso) {
+        this.pulso = pulso;
     }
 
-    public Double getControlImc() {
-        return controlImc;
+    public Double getTalla() {
+        return talla;
     }
 
-    public void setControlImc(Double controlImc) {
-        this.controlImc = controlImc;
+    public void setTalla(Double talla) {
+        this.talla = talla;
     }
 
-    public String getControlExamFisico() {
-        return controlExamFisico;
+    public Double getImc() {
+        return imc;
     }
 
-    public void setControlExamFisico(String controlExamFisico) {
-        this.controlExamFisico = controlExamFisico;
+    public void setImc(Double imc) {
+        this.imc = imc;
     }
 
-    public String getControlIndicaciones() {
-        return controlIndicaciones;
+    public String getExamenFisico() {
+        return examenFisico;
     }
 
-    public void setControlIndicaciones(String controlIndicaciones) {
-        this.controlIndicaciones = controlIndicaciones;
+    public void setExamenFisico(String examenFisico) {
+        this.examenFisico = examenFisico;
     }
 
-    public String getControlObservaciones() {
-        return controlObservaciones;
+    public String getIndicaciones() {
+        return indicaciones;
     }
 
-    public void setControlObservaciones(String controlObservaciones) {
-        this.controlObservaciones = controlObservaciones;
+    public void setIndicaciones(String indicaciones) {
+        this.indicaciones = indicaciones;
     }
 
-    public String getControlEdema() {
-        return controlEdema;
+    public String getObservaciones() {
+        return observaciones;
     }
 
-    public void setControlEdema(String controlEdema) {
-        this.controlEdema = controlEdema;
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
-    public Integer getControlEdadEmbarazo() {
-        return controlEdadEmbarazo;
+    public Short getEdema() {
+        return edema;
     }
 
-    public void setControlEdadEmbarazo(Integer controlEdadEmbarazo) {
-        this.controlEdadEmbarazo = controlEdadEmbarazo;
+    public void setEdema(Short edema) {
+        this.edema = edema;
+    }
+
+    public Double getEdadEmbarazo() {
+        return edadEmbarazo;
+    }
+
+    public void setEdadEmbarazo(Double edadEmbarazo) {
+        this.edadEmbarazo = edadEmbarazo;
+    }
+
+    public Integer getProfesionalRut() {
+        return profesionalRut;
+    }
+
+    public void setProfesionalRut(Integer profesionalRut) {
+        this.profesionalRut = profesionalRut;
+    }
+
+    public String getProfesionalDv() {
+        return profesionalDv;
+    }
+
+    public void setProfesionalDv(String profesionalDv) {
+        this.profesionalDv = profesionalDv;
+    }
+
+    public String getHistoria() {
+        return historia;
+    }
+
+    public void setHistoria(String historia) {
+        this.historia = historia;
+    }
+
+    public Short getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Short estado) {
+        this.estado = estado;
+    }
+
+    @XmlTransient
+    public List<Receta> getRecetaList() {
+        return recetaList;
+    }
+
+    public void setRecetaList(List<Receta> recetaList) {
+        this.recetaList = recetaList;
     }
 
     @XmlTransient
@@ -209,20 +271,21 @@ public class Controlobstetrico implements Serializable {
         this.diagnosticosList = diagnosticosList;
     }
 
-    public Profesional getProfesional() {
-        return profesional;
+    @XmlTransient
+    public List<Tratamiento> getTratamientoList() {
+        return tratamientoList;
     }
 
-    public void setProfesional(Profesional profesional) {
-        this.profesional = profesional;
+    public void setTratamientoList(List<Tratamiento> tratamientoList) {
+        this.tratamientoList = tratamientoList;
     }
 
-    public Episodioclinicoobstetrico getEpisodioNumero() {
-        return episodioNumero;
+    public Episodioclinico getNumerocorrelativo() {
+        return numerocorrelativo;
     }
 
-    public void setEpisodioNumero(Episodioclinicoobstetrico episodioNumero) {
-        this.episodioNumero = episodioNumero;
+    public void setNumerocorrelativo(Episodioclinico numerocorrelativo) {
+        this.numerocorrelativo = numerocorrelativo;
     }
 
     @XmlTransient
@@ -237,7 +300,7 @@ public class Controlobstetrico implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (controlId != null ? controlId.hashCode() : 0);
+        hash += (correltativocontrolobstetrico != null ? correltativocontrolobstetrico.hashCode() : 0);
         return hash;
     }
 
@@ -248,7 +311,7 @@ public class Controlobstetrico implements Serializable {
             return false;
         }
         Controlobstetrico other = (Controlobstetrico) object;
-        if ((this.controlId == null && other.controlId != null) || (this.controlId != null && !this.controlId.equals(other.controlId))) {
+        if ((this.correltativocontrolobstetrico == null && other.correltativocontrolobstetrico != null) || (this.correltativocontrolobstetrico != null && !this.correltativocontrolobstetrico.equals(other.correltativocontrolobstetrico))) {
             return false;
         }
         return true;
@@ -256,7 +319,7 @@ public class Controlobstetrico implements Serializable {
 
     @Override
     public String toString() {
-        return "cl.sistemarce.entity.Controlobstetrico[ controlId=" + controlId + " ]";
+        return "cl.sistemarce.entity.Controlobstetrico[ correltativocontrolobstetrico=" + correltativocontrolobstetrico + " ]";
     }
     
 }

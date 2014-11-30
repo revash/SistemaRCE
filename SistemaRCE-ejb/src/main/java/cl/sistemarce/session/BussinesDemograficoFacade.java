@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package cl.sistemarce.session;
+
 
 import cl.sistemarce.entity.Profesional;
 import javax.ejb.Stateless;
@@ -17,8 +17,8 @@ import javax.persistence.Query;
  * @author AndresEduardo
  */
 @Stateless
-public class BussinessFacade implements BussinessFacadeLocal{
-    
+public class BussinesDemograficoFacade implements BussinesDemograficoFacadeLocal {
+
     @PersistenceContext(unitName = "cl_SistemaRCE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -28,16 +28,13 @@ public class BussinessFacade implements BussinessFacadeLocal{
 
     @Override
     public Profesional getProfesionalByRut(Integer rut, String dv) {
-        Query query = em.createQuery("SELECT p FROM Profesional p WHERE p.profesionalPK.profesionalrut = :rut "
-                + "AND p.profesionalPK.profesionalDv = :dv");
+        Query query = em.createQuery("SELECT p FROM Profesional p WHERE p.profesionalPK.profesionalrut = :rut AND p.profesionalPK.profesionalDv = :dv");
         query.setParameter("rut", rut);
         query.setParameter("dv", dv);
-        if(!query.getResultList().isEmpty()){
+        if (!query.getResultList().isEmpty()) {
             return (Profesional) query.getResultList().get(0);
-        }
-        else{
+        } else {
             return null;
         }
     }
-    
 }

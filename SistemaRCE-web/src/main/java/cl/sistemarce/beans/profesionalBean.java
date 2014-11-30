@@ -5,9 +5,11 @@
  */
 package cl.sistemarce.beans;
 
+
+
 import cl.sistemarce.entity.Profesional;
-import cl.sistemarce.session.BussinessFacade;
-import cl.sistemarce.session.BussinessFacadeLocal;
+import cl.sistemarce.session.BussinesDemograficoFacade;
+import cl.sistemarce.session.BussinesDemograficoFacadeLocal;
 import cl.sistemarce.session.ProfesionalFacade;
 import cl.sistemarce.utils.appBean;
 import static cl.sistemarce.utils.appBean.sha256;
@@ -26,10 +28,11 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @RequestScoped
-public class profecionalBean {
-
+public class profesionalBean {
+    
     @EJB
-    private final BussinessFacadeLocal bussinessFacade;
+    private final BussinesDemograficoFacadeLocal bussinesDemograficoFacade;
+    
 
     @EJB
     private final cl.sistemarce.session.ProfesionalFacadeLocal profesionalFacade;
@@ -41,9 +44,9 @@ public class profecionalBean {
      */
     //constructor base, debe instanciar la clase ejb para poder utilizarla, debe
     //dejarse en final la calse ya que no posee get y set
-    public profecionalBean() {
+    public profesionalBean() {
         profesionalFacade = new ProfesionalFacade();
-        bussinessFacade = new BussinessFacade();
+        bussinesDemograficoFacade = new BussinesDemograficoFacade();
     }
 
     //post construct se ejecuta despues de crear el bean, para inicializar datos
@@ -61,7 +64,7 @@ public class profecionalBean {
         String rut1 = rut.substring(0, rut.length() - 1);
         String dv2 = rut.charAt(rut.length() - 1) + "";
         clave = sha256(clave);
-        Profesional profecionalAux = bussinessFacade.getProfesionalByRut(Integer.parseInt(rut1), dv2);
+        Profesional profecionalAux = bussinesDemograficoFacade.getProfesionalByRut(Integer.parseInt(rut1), dv2);
         if (profecionalAux == null) {
             System.out.println("null");
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error en Credenciales1", "Datos Invalidos"));

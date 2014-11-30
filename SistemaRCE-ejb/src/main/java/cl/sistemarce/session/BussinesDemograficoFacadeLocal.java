@@ -6,6 +6,7 @@
 
 package cl.sistemarce.session;
 
+
 import cl.sistemarce.entity.Profesional;
 import javax.ejb.Local;
 
@@ -14,6 +15,7 @@ import javax.ejb.Local;
  * @author AndresEduardo
  */
 @Local
-public interface BussinessFacadeLocal {
-    public Profesional getProfesionalByRut(Integer rut, String dv);
+public interface BussinesDemograficoFacadeLocal {
+    
+    public Profesional getProfesionalByRut(Integer rut,String dv);
 }

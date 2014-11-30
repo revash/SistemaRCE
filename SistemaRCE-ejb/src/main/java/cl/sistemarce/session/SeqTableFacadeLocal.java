@@ -6,7 +6,7 @@
 
 package cl.sistemarce.session;
 
-import cl.sistemarce.entity.Tipopartos;
+import cl.sistemarce.entity.SeqTable;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,19 +15,19 @@ import javax.ejb.Local;
  * @author AndresEduardo
  */
 @Local
-public interface TipopartosFacadeLocal {
+public interface SeqTableFacadeLocal {
 
-    void create(Tipopartos tipopartos);
+    void create(SeqTable seqTable);
 
-    void edit(Tipopartos tipopartos);
+    void edit(SeqTable seqTable);
 
-    void remove(Tipopartos tipopartos);
+    void remove(SeqTable seqTable);
 
-    Tipopartos find(Object id);
+    SeqTable find(Object id);
 
-    List<Tipopartos> findAll();
+    List<SeqTable> findAll();
 
-    List<Tipopartos> findRange(int[] range);
+    List<SeqTable> findRange(int[] range);
 
     int count();
     

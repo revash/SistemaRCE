@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Hipotesis.findAll", query = "SELECT h FROM Hipotesis h"),
     @NamedQuery(name = "Hipotesis.findByObservaciones", query = "SELECT h FROM Hipotesis h WHERE h.observaciones = :observaciones"),
-    @NamedQuery(name = "Hipotesis.findByHipotesisId", query = "SELECT h FROM Hipotesis h WHERE h.hipotesisId = :hipotesisId")})
+    @NamedQuery(name = "Hipotesis.findByHipotesisId", query = "SELECT h FROM Hipotesis h WHERE h.hipotesisId = :hipotesisId"),
+    @NamedQuery(name = "Hipotesis.findByControlId", query = "SELECT h FROM Hipotesis h WHERE h.controlId = :controlId")})
 public class Hipotesis implements Serializable {
     private static final long serialVersionUID = 1L;
     @Size(max = 2147483647)
@@ -41,21 +42,30 @@ public class Hipotesis implements Serializable {
     @NotNull
     @Column(name = "hipotesis_id")
     private Integer hipotesisId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "control_id")
+    private int controlId;
     @JoinColumn(name = "tipoh_id", referencedColumnName = "tipoh_id")
     @ManyToOne(optional = false)
     private Tiposhipotesis tipohId;
     @JoinColumn(name = "estado_id", referencedColumnName = "estado_id")
     @ManyToOne(optional = false)
     private Estados estadoId;
-    @JoinColumn(name = "control_id", referencedColumnName = "control_id")
-    @ManyToOne(optional = false)
-    private Controlobstetrico controlId;
+    @JoinColumn(name = "correltativocontrolobstetrico", referencedColumnName = "correltativocontrolobstetrico")
+    @ManyToOne
+    private Controlobstetrico correltativocontrolobstetrico;
 
     public Hipotesis() {
     }
 
     public Hipotesis(Integer hipotesisId) {
         this.hipotesisId = hipotesisId;
+    }
+
+    public Hipotesis(Integer hipotesisId, int controlId) {
+        this.hipotesisId = hipotesisId;
+        this.controlId = controlId;
     }
 
     public String getObservaciones() {
@@ -74,6 +84,14 @@ public class Hipotesis implements Serializable {
         this.hipotesisId = hipotesisId;
     }
 
+    public int getControlId() {
+        return controlId;
+    }
+
+    public void setControlId(int controlId) {
+        this.controlId = controlId;
+    }
+
     public Tiposhipotesis getTipohId() {
         return tipohId;
     }
@@ -90,12 +108,12 @@ public class Hipotesis implements Serializable {
         this.estadoId = estadoId;
     }
 
-    public Controlobstetrico getControlId() {
-        return controlId;
+    public Controlobstetrico getCorreltativocontrolobstetrico() {
+        return correltativocontrolobstetrico;
     }
 
-    public void setControlId(Controlobstetrico controlId) {
-        this.controlId = controlId;
+    public void setCorreltativocontrolobstetrico(Controlobstetrico correltativocontrolobstetrico) {
+        this.correltativocontrolobstetrico = correltativocontrolobstetrico;
     }
 
     @Override

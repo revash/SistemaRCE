@@ -6,7 +6,7 @@
 
 package cl.sistemarce.session;
 
-import cl.sistemarce.entity.Partos;
+import cl.sistemarce.entity.Agendamiento;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author AndresEduardo
  */
 @Stateless
-public class PartosFacade extends AbstractFacade<Partos> implements PartosFacadeLocal {
+public class AgendamientoFacade extends AbstractFacade<Agendamiento> implements AgendamientoFacadeLocal {
     @PersistenceContext(unitName = "cl_SistemaRCE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class PartosFacade extends AbstractFacade<Partos> implements PartosFacade
         return em;
     }
 
-    public PartosFacade() {
-        super(Partos.class);
+    public AgendamientoFacade() {
+        super(Agendamiento.class);
     }
     
 }

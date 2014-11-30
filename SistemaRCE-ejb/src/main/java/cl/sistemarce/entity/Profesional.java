@@ -8,7 +8,6 @@ package cl.sistemarce.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -65,22 +64,14 @@ public class Profesional implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "profesional_claveacceso")
     private String profesionalClaveacceso;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesional")
-    private List<Receta> recetaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesional")
-    private List<Controldiabetico> controldiabeticoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesional")
-    private List<Consultanutricional> consultanutricionalList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesional")
-    private List<Tratamiento> tratamientoList;
+    @OneToMany(mappedBy = "profesional")
+    private List<Ficha> fichaList;
     @JoinColumn(name = "rol_codigo", referencedColumnName = "rol_codigo")
     @ManyToOne(optional = false)
     private Rol rolCodigo;
     @JoinColumn(name = "especialidad_codigo", referencedColumnName = "especialidad_codigo")
     @ManyToOne(optional = false)
     private Especialidad especialidadCodigo;
-    @OneToMany(mappedBy = "profesional")
-    private List<Controlobstetrico> controlobstetricoList;
 
     public Profesional() {
     }
@@ -158,39 +149,12 @@ public class Profesional implements Serializable {
     }
 
     @XmlTransient
-    public List<Receta> getRecetaList() {
-        return recetaList;
+    public List<Ficha> getFichaList() {
+        return fichaList;
     }
 
-    public void setRecetaList(List<Receta> recetaList) {
-        this.recetaList = recetaList;
-    }
-
-    @XmlTransient
-    public List<Controldiabetico> getControldiabeticoList() {
-        return controldiabeticoList;
-    }
-
-    public void setControldiabeticoList(List<Controldiabetico> controldiabeticoList) {
-        this.controldiabeticoList = controldiabeticoList;
-    }
-
-    @XmlTransient
-    public List<Consultanutricional> getConsultanutricionalList() {
-        return consultanutricionalList;
-    }
-
-    public void setConsultanutricionalList(List<Consultanutricional> consultanutricionalList) {
-        this.consultanutricionalList = consultanutricionalList;
-    }
-
-    @XmlTransient
-    public List<Tratamiento> getTratamientoList() {
-        return tratamientoList;
-    }
-
-    public void setTratamientoList(List<Tratamiento> tratamientoList) {
-        this.tratamientoList = tratamientoList;
+    public void setFichaList(List<Ficha> fichaList) {
+        this.fichaList = fichaList;
     }
 
     public Rol getRolCodigo() {
@@ -207,15 +171,6 @@ public class Profesional implements Serializable {
 
     public void setEspecialidadCodigo(Especialidad especialidadCodigo) {
         this.especialidadCodigo = especialidadCodigo;
-    }
-
-    @XmlTransient
-    public List<Controlobstetrico> getControlobstetricoList() {
-        return controlobstetricoList;
-    }
-
-    public void setControlobstetricoList(List<Controlobstetrico> controlobstetricoList) {
-        this.controlobstetricoList = controlobstetricoList;
     }
 
     @Override

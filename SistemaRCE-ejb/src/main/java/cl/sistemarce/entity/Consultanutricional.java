@@ -13,10 +13,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Consultanutricional.findAll", query = "SELECT c FROM Consultanutricional c"),
-    @NamedQuery(name = "Consultanutricional.findByCnId", query = "SELECT c FROM Consultanutricional c WHERE c.cnId = :cnId"),
+    @NamedQuery(name = "Consultanutricional.findByNumerocorrelativonutricion", query = "SELECT c FROM Consultanutricional c WHERE c.numerocorrelativonutricion = :numerocorrelativonutricion"),
     @NamedQuery(name = "Consultanutricional.findByCnHabitosalimenticios", query = "SELECT c FROM Consultanutricional c WHERE c.cnHabitosalimenticios = :cnHabitosalimenticios"),
     @NamedQuery(name = "Consultanutricional.findByCnActividadesfisicas", query = "SELECT c FROM Consultanutricional c WHERE c.cnActividadesfisicas = :cnActividadesfisicas"),
     @NamedQuery(name = "Consultanutricional.findByCnImc", query = "SELECT c FROM Consultanutricional c WHERE c.cnImc = :cnImc"),
@@ -41,14 +40,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Consultanutricional.findByCnPeso", query = "SELECT c FROM Consultanutricional c WHERE c.cnPeso = :cnPeso"),
     @NamedQuery(name = "Consultanutricional.findByCnFecha", query = "SELECT c FROM Consultanutricional c WHERE c.cnFecha = :cnFecha"),
     @NamedQuery(name = "Consultanutricional.findByCnAltura", query = "SELECT c FROM Consultanutricional c WHERE c.cnAltura = :cnAltura"),
-    @NamedQuery(name = "Consultanutricional.findByCnDieta", query = "SELECT c FROM Consultanutricional c WHERE c.cnDieta = :cnDieta")})
+    @NamedQuery(name = "Consultanutricional.findByCnDieta", query = "SELECT c FROM Consultanutricional c WHERE c.cnDieta = :cnDieta"),
+    @NamedQuery(name = "Consultanutricional.findByProfesionalRut", query = "SELECT c FROM Consultanutricional c WHERE c.profesionalRut = :profesionalRut"),
+    @NamedQuery(name = "Consultanutricional.findByProfesionalDv", query = "SELECT c FROM Consultanutricional c WHERE c.profesionalDv = :profesionalDv")})
 public class Consultanutricional implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "cn_id")
-    private Integer cnId;
+    @Column(name = "numerocorrelativonutricion")
+    private Integer numerocorrelativonutricion;
     @Size(max = 2147483647)
     @Column(name = "cn_habitosalimenticios")
     private String cnHabitosalimenticios;
@@ -70,28 +71,28 @@ public class Consultanutricional implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "cn_dieta")
     private String cnDieta;
-    @JoinColumns({
-        @JoinColumn(name = "profesionalrut", referencedColumnName = "profesionalrut"),
-        @JoinColumn(name = "profesional_dv", referencedColumnName = "profesional_dv")})
-    @ManyToOne(optional = false)
-    private Profesional profesional;
-    @JoinColumn(name = "episodio_numero", referencedColumnName = "episodio_numero")
-    @ManyToOne(optional = false)
-    private Episodioclinicoobstetrico episodioNumero;
+    @Column(name = "profesional_rut")
+    private Integer profesionalRut;
+    @Size(max = 1)
+    @Column(name = "profesional_dv")
+    private String profesionalDv;
+    @JoinColumn(name = "numerocorrelativonutricion", referencedColumnName = "numerocorrelativo", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Episodioclinico episodioclinico;
 
     public Consultanutricional() {
     }
 
-    public Consultanutricional(Integer cnId) {
-        this.cnId = cnId;
+    public Consultanutricional(Integer numerocorrelativonutricion) {
+        this.numerocorrelativonutricion = numerocorrelativonutricion;
     }
 
-    public Integer getCnId() {
-        return cnId;
+    public Integer getNumerocorrelativonutricion() {
+        return numerocorrelativonutricion;
     }
 
-    public void setCnId(Integer cnId) {
-        this.cnId = cnId;
+    public void setNumerocorrelativonutricion(Integer numerocorrelativonutricion) {
+        this.numerocorrelativonutricion = numerocorrelativonutricion;
     }
 
     public String getCnHabitosalimenticios() {
@@ -158,26 +159,34 @@ public class Consultanutricional implements Serializable {
         this.cnDieta = cnDieta;
     }
 
-    public Profesional getProfesional() {
-        return profesional;
+    public Integer getProfesionalRut() {
+        return profesionalRut;
     }
 
-    public void setProfesional(Profesional profesional) {
-        this.profesional = profesional;
+    public void setProfesionalRut(Integer profesionalRut) {
+        this.profesionalRut = profesionalRut;
     }
 
-    public Episodioclinicoobstetrico getEpisodioNumero() {
-        return episodioNumero;
+    public String getProfesionalDv() {
+        return profesionalDv;
     }
 
-    public void setEpisodioNumero(Episodioclinicoobstetrico episodioNumero) {
-        this.episodioNumero = episodioNumero;
+    public void setProfesionalDv(String profesionalDv) {
+        this.profesionalDv = profesionalDv;
+    }
+
+    public Episodioclinico getEpisodioclinico() {
+        return episodioclinico;
+    }
+
+    public void setEpisodioclinico(Episodioclinico episodioclinico) {
+        this.episodioclinico = episodioclinico;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cnId != null ? cnId.hashCode() : 0);
+        hash += (numerocorrelativonutricion != null ? numerocorrelativonutricion.hashCode() : 0);
         return hash;
     }
 
@@ -188,7 +197,7 @@ public class Consultanutricional implements Serializable {
             return false;
         }
         Consultanutricional other = (Consultanutricional) object;
-        if ((this.cnId == null && other.cnId != null) || (this.cnId != null && !this.cnId.equals(other.cnId))) {
+        if ((this.numerocorrelativonutricion == null && other.numerocorrelativonutricion != null) || (this.numerocorrelativonutricion != null && !this.numerocorrelativonutricion.equals(other.numerocorrelativonutricion))) {
             return false;
         }
         return true;
@@ -196,7 +205,7 @@ public class Consultanutricional implements Serializable {
 
     @Override
     public String toString() {
-        return "cl.sistemarce.entity.Consultanutricional[ cnId=" + cnId + " ]";
+        return "cl.sistemarce.entity.Consultanutricional[ numerocorrelativonutricion=" + numerocorrelativonutricion + " ]";
     }
     
 }

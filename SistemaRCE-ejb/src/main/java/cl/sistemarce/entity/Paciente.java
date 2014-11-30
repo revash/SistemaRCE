@@ -9,6 +9,7 @@ package cl.sistemarce.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -33,11 +34,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Paciente.findByPersonaRut", query = "SELECT p FROM Paciente p WHERE p.pacientePK.personaRut = :personaRut"),
     @NamedQuery(name = "Paciente.findByPersonaDv", query = "SELECT p FROM Paciente p WHERE p.pacientePK.personaDv = :personaDv"),
     @NamedQuery(name = "Paciente.findByNacionalidadCodigo", query = "SELECT p FROM Paciente p WHERE p.pacientePK.nacionalidadCodigo = :nacionalidadCodigo"),
-    @NamedQuery(name = "Paciente.findByFichaNumero", query = "SELECT p FROM Paciente p WHERE p.pacientePK.fichaNumero = :fichaNumero")})
+    @NamedQuery(name = "Paciente.findByFichaNumero", query = "SELECT p FROM Paciente p WHERE p.pacientePK.fichaNumero = :fichaNumero"),
+    @NamedQuery(name = "Paciente.findByCorrelativoep", query = "SELECT p FROM Paciente p WHERE p.correlativoep = :correlativoep")})
 public class Paciente implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected PacientePK pacientePK;
+    @Column(name = "correlativoep")
+    private Integer correlativoep;
     @JoinColumns({
         @JoinColumn(name = "persona_rut", referencedColumnName = "persona_rut", insertable = false, updatable = false),
         @JoinColumn(name = "persona_dv", referencedColumnName = "persona_dv", insertable = false, updatable = false),
@@ -48,11 +52,11 @@ public class Paciente implements Serializable {
     @ManyToOne(optional = false)
     private Ficha ficha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente")
-    private List<Receta> recetaList;
-    @OneToMany(mappedBy = "paciente")
-    private List<Registroclinicoobstetrico> registroclinicoobstetricoList;
+    private List<Agendamiento> agendamientoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente")
-    private List<Tratamiento> tratamientoList;
+    private List<Episodioclinico> episodioclinicoList;
+    @OneToMany(mappedBy = "paciente")
+    private List<Datosobstetricos> datosobstetricosList;
 
     public Paciente() {
     }
@@ -73,6 +77,14 @@ public class Paciente implements Serializable {
         this.pacientePK = pacientePK;
     }
 
+    public Integer getCorrelativoep() {
+        return correlativoep;
+    }
+
+    public void setCorrelativoep(Integer correlativoep) {
+        this.correlativoep = correlativoep;
+    }
+
     public Persona getPersona() {
         return persona;
     }
@@ -90,30 +102,30 @@ public class Paciente implements Serializable {
     }
 
     @XmlTransient
-    public List<Receta> getRecetaList() {
-        return recetaList;
+    public List<Agendamiento> getAgendamientoList() {
+        return agendamientoList;
     }
 
-    public void setRecetaList(List<Receta> recetaList) {
-        this.recetaList = recetaList;
-    }
-
-    @XmlTransient
-    public List<Registroclinicoobstetrico> getRegistroclinicoobstetricoList() {
-        return registroclinicoobstetricoList;
-    }
-
-    public void setRegistroclinicoobstetricoList(List<Registroclinicoobstetrico> registroclinicoobstetricoList) {
-        this.registroclinicoobstetricoList = registroclinicoobstetricoList;
+    public void setAgendamientoList(List<Agendamiento> agendamientoList) {
+        this.agendamientoList = agendamientoList;
     }
 
     @XmlTransient
-    public List<Tratamiento> getTratamientoList() {
-        return tratamientoList;
+    public List<Episodioclinico> getEpisodioclinicoList() {
+        return episodioclinicoList;
     }
 
-    public void setTratamientoList(List<Tratamiento> tratamientoList) {
-        this.tratamientoList = tratamientoList;
+    public void setEpisodioclinicoList(List<Episodioclinico> episodioclinicoList) {
+        this.episodioclinicoList = episodioclinicoList;
+    }
+
+    @XmlTransient
+    public List<Datosobstetricos> getDatosobstetricosList() {
+        return datosobstetricosList;
+    }
+
+    public void setDatosobstetricosList(List<Datosobstetricos> datosobstetricosList) {
+        this.datosobstetricosList = datosobstetricosList;
     }
 
     @Override

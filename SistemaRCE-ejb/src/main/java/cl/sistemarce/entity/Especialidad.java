@@ -49,6 +49,8 @@ public class Especialidad implements Serializable {
     @ManyToOne(optional = false)
     private Unidad unidadCodigo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "especialidadCodigo")
+    private List<Agendamiento> agendamientoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "especialidadCodigo")
     private List<Profesional> profesionalList;
 
     public Especialidad() {
@@ -80,6 +82,15 @@ public class Especialidad implements Serializable {
 
     public void setUnidadCodigo(Unidad unidadCodigo) {
         this.unidadCodigo = unidadCodigo;
+    }
+
+    @XmlTransient
+    public List<Agendamiento> getAgendamientoList() {
+        return agendamientoList;
+    }
+
+    public void setAgendamientoList(List<Agendamiento> agendamientoList) {
+        this.agendamientoList = agendamientoList;
     }
 
     @XmlTransient

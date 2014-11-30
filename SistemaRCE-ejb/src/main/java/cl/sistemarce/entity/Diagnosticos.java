@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Diagnosticos.findAll", query = "SELECT d FROM Diagnosticos d"),
     @NamedQuery(name = "Diagnosticos.findByObservaciones", query = "SELECT d FROM Diagnosticos d WHERE d.observaciones = :observaciones"),
     @NamedQuery(name = "Diagnosticos.findByDiagnosticoGes", query = "SELECT d FROM Diagnosticos d WHERE d.diagnosticoGes = :diagnosticoGes"),
-    @NamedQuery(name = "Diagnosticos.findByDiagnosticoId", query = "SELECT d FROM Diagnosticos d WHERE d.diagnosticoId = :diagnosticoId")})
+    @NamedQuery(name = "Diagnosticos.findByDiagnosticoId", query = "SELECT d FROM Diagnosticos d WHERE d.diagnosticoId = :diagnosticoId"),
+    @NamedQuery(name = "Diagnosticos.findByControlId", query = "SELECT d FROM Diagnosticos d WHERE d.controlId = :controlId")})
 public class Diagnosticos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Size(max = 2147483647)
@@ -44,21 +45,30 @@ public class Diagnosticos implements Serializable {
     @NotNull
     @Column(name = "diagnostico_id")
     private Integer diagnosticoId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "control_id")
+    private int controlId;
     @JoinColumn(name = "patologia_codigo", referencedColumnName = "patologia_codigo")
     @ManyToOne(optional = false)
     private Patologias patologiaCodigo;
     @JoinColumn(name = "estado_id", referencedColumnName = "estado_id")
     @ManyToOne(optional = false)
     private Estados estadoId;
-    @JoinColumn(name = "control_id", referencedColumnName = "control_id")
-    @ManyToOne(optional = false)
-    private Controlobstetrico controlId;
+    @JoinColumn(name = "correltativocontrolobstetrico", referencedColumnName = "correltativocontrolobstetrico")
+    @ManyToOne
+    private Controlobstetrico correltativocontrolobstetrico;
 
     public Diagnosticos() {
     }
 
     public Diagnosticos(Integer diagnosticoId) {
         this.diagnosticoId = diagnosticoId;
+    }
+
+    public Diagnosticos(Integer diagnosticoId, int controlId) {
+        this.diagnosticoId = diagnosticoId;
+        this.controlId = controlId;
     }
 
     public String getObservaciones() {
@@ -85,6 +95,14 @@ public class Diagnosticos implements Serializable {
         this.diagnosticoId = diagnosticoId;
     }
 
+    public int getControlId() {
+        return controlId;
+    }
+
+    public void setControlId(int controlId) {
+        this.controlId = controlId;
+    }
+
     public Patologias getPatologiaCodigo() {
         return patologiaCodigo;
     }
@@ -101,12 +119,12 @@ public class Diagnosticos implements Serializable {
         this.estadoId = estadoId;
     }
 
-    public Controlobstetrico getControlId() {
-        return controlId;
+    public Controlobstetrico getCorreltativocontrolobstetrico() {
+        return correltativocontrolobstetrico;
     }
 
-    public void setControlId(Controlobstetrico controlId) {
-        this.controlId = controlId;
+    public void setCorreltativocontrolobstetrico(Controlobstetrico correltativocontrolobstetrico) {
+        this.correltativocontrolobstetrico = correltativocontrolobstetrico;
     }
 
     @Override

@@ -13,7 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -34,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Tratamiento.findAll", query = "SELECT t FROM Tratamiento t"),
     @NamedQuery(name = "Tratamiento.findByTratamientoId", query = "SELECT t FROM Tratamiento t WHERE t.tratamientoId = :tratamientoId"),
+    @NamedQuery(name = "Tratamiento.findByControlId", query = "SELECT t FROM Tratamiento t WHERE t.controlId = :controlId"),
     @NamedQuery(name = "Tratamiento.findByTratamientoFecha", query = "SELECT t FROM Tratamiento t WHERE t.tratamientoFecha = :tratamientoFecha"),
     @NamedQuery(name = "Tratamiento.findByTratamientoCuerpo", query = "SELECT t FROM Tratamiento t WHERE t.tratamientoCuerpo = :tratamientoCuerpo")})
 public class Tratamiento implements Serializable {
@@ -43,27 +43,19 @@ public class Tratamiento implements Serializable {
     @NotNull
     @Column(name = "tratamiento_id")
     private Integer tratamientoId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "control_id")
+    private int controlId;
     @Column(name = "tratamiento_fecha")
     @Temporal(TemporalType.DATE)
     private Date tratamientoFecha;
     @Size(max = 2147483647)
     @Column(name = "tratamiento_cuerpo")
     private String tratamientoCuerpo;
-    @JoinColumns({
-        @JoinColumn(name = "profesionalrut", referencedColumnName = "profesionalrut"),
-        @JoinColumn(name = "profesional_dv", referencedColumnName = "profesional_dv")})
-    @ManyToOne(optional = false)
-    private Profesional profesional;
-    @JoinColumns({
-        @JoinColumn(name = "persona_rut", referencedColumnName = "persona_rut"),
-        @JoinColumn(name = "persona_dv", referencedColumnName = "persona_dv"),
-        @JoinColumn(name = "nacionalidad_codigo", referencedColumnName = "nacionalidad_codigo"),
-        @JoinColumn(name = "ficha_numero", referencedColumnName = "ficha_numero")})
-    @ManyToOne(optional = false)
-    private Paciente paciente;
-    @JoinColumn(name = "episodio_numero", referencedColumnName = "episodio_numero")
-    @ManyToOne(optional = false)
-    private Episodioclinicoobstetrico episodioNumero;
+    @JoinColumn(name = "correltativocontrolobstetrico", referencedColumnName = "correltativocontrolobstetrico")
+    @ManyToOne
+    private Controlobstetrico correltativocontrolobstetrico;
 
     public Tratamiento() {
     }
@@ -72,12 +64,25 @@ public class Tratamiento implements Serializable {
         this.tratamientoId = tratamientoId;
     }
 
+    public Tratamiento(Integer tratamientoId, int controlId) {
+        this.tratamientoId = tratamientoId;
+        this.controlId = controlId;
+    }
+
     public Integer getTratamientoId() {
         return tratamientoId;
     }
 
     public void setTratamientoId(Integer tratamientoId) {
         this.tratamientoId = tratamientoId;
+    }
+
+    public int getControlId() {
+        return controlId;
+    }
+
+    public void setControlId(int controlId) {
+        this.controlId = controlId;
     }
 
     public Date getTratamientoFecha() {
@@ -96,28 +101,12 @@ public class Tratamiento implements Serializable {
         this.tratamientoCuerpo = tratamientoCuerpo;
     }
 
-    public Profesional getProfesional() {
-        return profesional;
+    public Controlobstetrico getCorreltativocontrolobstetrico() {
+        return correltativocontrolobstetrico;
     }
 
-    public void setProfesional(Profesional profesional) {
-        this.profesional = profesional;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public Episodioclinicoobstetrico getEpisodioNumero() {
-        return episodioNumero;
-    }
-
-    public void setEpisodioNumero(Episodioclinicoobstetrico episodioNumero) {
-        this.episodioNumero = episodioNumero;
+    public void setCorreltativocontrolobstetrico(Controlobstetrico correltativocontrolobstetrico) {
+        this.correltativocontrolobstetrico = correltativocontrolobstetrico;
     }
 
     @Override

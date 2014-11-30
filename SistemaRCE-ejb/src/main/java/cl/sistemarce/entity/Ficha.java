@@ -14,6 +14,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -49,6 +52,11 @@ public class Ficha implements Serializable {
     @Column(name = "ficha_fecha_baja")
     @Temporal(TemporalType.DATE)
     private Date fichaFechaBaja;
+    @JoinColumns({
+        @JoinColumn(name = "profesionalrut", referencedColumnName = "profesionalrut"),
+        @JoinColumn(name = "profesional_dv", referencedColumnName = "profesional_dv")})
+    @ManyToOne
+    private Profesional profesional;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ficha")
     private List<Paciente> pacienteList;
 
@@ -81,6 +89,14 @@ public class Ficha implements Serializable {
 
     public void setFichaFechaBaja(Date fichaFechaBaja) {
         this.fichaFechaBaja = fichaFechaBaja;
+    }
+
+    public Profesional getProfesional() {
+        return profesional;
+    }
+
+    public void setProfesional(Profesional profesional) {
+        this.profesional = profesional;
     }
 
     @XmlTransient

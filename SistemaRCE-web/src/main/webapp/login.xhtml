@@ -24,23 +24,23 @@
                         <div class="form-group">
                             <p:outputLabel value="Rut" for="rut" styleClass="col-md-4 control-label"/>
                             <div class="col-md-8">
-                                <p:inputText id="rut" value="#{profecionalBean.rut}" styleClass="form-control input-md" required="true"
+                                <p:inputText id="rut" value="#{profesionalBean.rut}" styleClass="form-control input-md" required="true"
                                              requiredMessage="Debe ingresar un Rut Valido">
-                                    <p:ajax event="blur" update="growl" listener="#{profecionalBean.onValidaRut()}"/>
-                                    <p:ajax event="blur" update="rut" listener="#{profecionalBean.onFormateaRut()}"/>
+                                    <p:ajax event="blur" update="growl" listener="#{profesionalBean.onValidaRut()}"/>
+                                    <p:ajax event="blur" update="rut" listener="#{profesionalBean.onFormateaRut()}"/>
                                 </p:inputText>
                             </div>
                         </div>
                         <div class="form-group">
                             <p:outputLabel value="Clave" for="pass" styleClass="col-md-4 control-label"/>
                             <div class="col-md-8">
-                                <p:password id="pass" value="#{profecionalBean.clave}" styleClass="form-control input-md" required="true"
+                                <p:password id="pass" value="#{profesionalBean.clave}" styleClass="form-control input-md" required="true"
                                             requiredMessage="Debe ingresar una Contraseña"/>
                             </div>
                         </div>
                     </div>
                     <div class="footer">
-                        <p:commandButton value="Login" actionListener="#{profecionalBean.login()}" update="growl" styleClass="btn btn-success" />
+                        <p:commandButton value="Login" actionListener="#{profesionalBean.login()}" update="growl" styleClass="btn btn-success" />
                         
                     </div>
                 </h:form>
