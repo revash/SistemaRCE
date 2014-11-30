@@ -57,6 +57,8 @@ public class sexoBean {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe Ingresar Datos En Descripcion Sexo", null));
         } else {
             sexoFacade.create(sexo);
+            sexos = sexoFacade.findAll();
+            sexo = new Sexo();
             formulario = "formCreateCiudad";
             dialog = "dlg1";
             creado = true;

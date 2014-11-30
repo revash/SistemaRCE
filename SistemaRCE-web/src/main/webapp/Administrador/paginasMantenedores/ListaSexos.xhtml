@@ -14,7 +14,7 @@
                 <f:view>
                     <div id="content" style="margin-left:0px !important;">
                         <p:growl id="growl" showSummary="true" life="3000"  />  
-                        <h:form id="listaSexos2">
+                        <h:form id="formListaSexo">
                             <div class="menubar">
                                 <div class="sidebar-toggler visible-xs">
                                     <i class="ion-navicon"></i>
@@ -78,7 +78,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-4 control-label"></label>
                                                 <div class="col-md-4">
-                                                    <p:commandButton value="Guardar" actionListener="#{sexoBean.createSexo(event)}" update=":growl, :listaSexos2:listaSexos" 
+                                                    <p:commandButton value="Guardar" actionListener="#{sexoBean.createSexo(event)}" update=":growl, :formListaSexo" 
                                                                      oncomplete="ocultar(xhr, status, args)" styleClass="btn btn-success" />
                                                     <p:commandButton value="Cancelar" onclick="PF('dlg1').hide()" styleClass="btn btn-danger" />
                                                 </div>
