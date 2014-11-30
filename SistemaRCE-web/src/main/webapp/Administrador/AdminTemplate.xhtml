@@ -39,7 +39,16 @@
         <p:layout fullPage="true">
 
             <p:layoutUnit id="top" position="north" size="50">
-                <ui:insert name="top"></ui:insert>
+                <p:menubar>
+                    <p:submenu label="Datos Demograficos" icon="ui-icon-document">
+                        <p:menuitem value="Ingresar Datos Persona" url="#" />
+                        <p:menuitem value="Listar Personas Ingresadas" url="#" />
+                    </p:submenu>
+                    <p:submenu label="Agenda" icon="ui-icon-pencil">
+                        <p:menuitem value="Agendar Paciente" url="#{applicationBean.baseUrl}/Administrador/paginasMantenedores/ListaSexos.xhtml" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
+                        <p:menuitem value="Referenciar Paciente a Profecional" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+                    </p:submenu>
+                </p:menubar>
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="true" collapsible="true">

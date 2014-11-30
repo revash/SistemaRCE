@@ -33,6 +33,7 @@ public class sexoBean {
     private List<Sexo> sexos;
     private List<Sexo> filterSexos;
     private Sexo selectedSexo;
+    private boolean boton;
 
     //constructor
     public sexoBean() {
@@ -45,6 +46,7 @@ public class sexoBean {
         sexos = sexoFacade.findAll();
         sexo = new Sexo();
         selectedSexo = new Sexo();
+        boton = true;
     }
 
     //metodos
@@ -68,6 +70,33 @@ public class sexoBean {
         reqContext.addCallbackParam("formulario", formulario);
         reqContext.addCallbackParam("creado", creado);
         reqContext.addCallbackParam("dialog", dialog);
+    }
+    
+    public void updateSexo(ActionEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext reqContext = RequestContext.getCurrentInstance();
+        boolean creado = false;
+        String formulario = "";
+        String dialog = "";
+        if (sexo.getSexoDescripcion().equalsIgnoreCase("")) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe Ingresar Datos En Descripcion Sexo", null));
+        } else {
+            sexoFacade.edit(sexo);
+            sexo=new Sexo();
+            formulario = "formEditSexo";
+            dialog = "dlg2";
+            creado = true;
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos Correctamente Editados", null));
+        }
+        sexos = sexoFacade.findAll();
+        reqContext.addCallbackParam("formulario", formulario);
+        reqContext.addCallbackParam("creado", creado);
+        reqContext.addCallbackParam("dialog", dialog);
+    }
+    
+    public void onRowSelect() {
+        boton = false;
+        sexo = selectedSexo;
     }
 
     //get and set
@@ -102,5 +131,15 @@ public class sexoBean {
     public void setSelectedSexo(Sexo selectedSexo) {
         this.selectedSexo = selectedSexo;
     }
+
+    public boolean isBoton() {
+        return boton;
+    }
+
+    public void setBoton(boolean boton) {
+        this.boton = boton;
+    }
+    
+    
 
 }
