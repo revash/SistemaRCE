@@ -44,6 +44,7 @@ public class sexoBean {
     public void myInit() {
         sexos = sexoFacade.findAll();
         sexo = new Sexo();
+        selectedSexo = new Sexo();
     }
 
     //metodos
@@ -51,22 +52,22 @@ public class sexoBean {
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext reqContext = RequestContext.getCurrentInstance();
         boolean creado = false;
-        String formulario = "";
+        String formulario = "formCreateSexo";
         String dialog = "";
         if (sexo.getSexoDescripcion().equalsIgnoreCase("")) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe Ingresar Datos En Descripcion Sexo", null));
         } else {
             sexoFacade.create(sexo);
-            sexos = sexoFacade.findAll();
-            sexo = new Sexo();
-            formulario = "formCreateCiudad";
+            sexo=new Sexo();
+            formulario = "crearSexos";
             dialog = "dlg1";
             creado = true;
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos Correctamente Creados", null));
-            reqContext.addCallbackParam("createSexos", formulario);
-            reqContext.addCallbackParam("creado", creado);
-            reqContext.addCallbackParam("dialog", dialog);
         }
+        sexos = sexoFacade.findAll();
+        reqContext.addCallbackParam("formulario", formulario);
+        reqContext.addCallbackParam("creado", creado);
+        reqContext.addCallbackParam("dialog", dialog);
     }
 
     //get and set
