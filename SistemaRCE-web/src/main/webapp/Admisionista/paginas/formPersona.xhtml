@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../Admisionista.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <div id="content" style="margin-left: 0px !important;">
+                        <fieldset>
+                            <legend>Formulario de Personas</legend>
+                            <h:form styleClass="form-horizontal" id="formCreatePersona" >
+                                <p:growl id="growl" showSummary="true" life="3000"  />  
+                                <div class="form-group">
+                                    <p:outputLabel value="Persona Rut:" for="personaPK.personaRut" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaPK.personaRut" value="#{personaBean.rut}" title="PersonaRut" styleClass="form-control input-md" required="true" requiredMessage="The PersonaRut field is required."/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel value="Nombres:" for="personaNombres" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaNombres" value="#{personaBean.persona.personaNombres}" title="PersonaNombres" styleClass="form-control input-md" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Apellido Paterno:" for="personaApellido1" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaApellido1" value="#{personaBean.persona.personaApellido1}" title="PersonaApellido1" styleClass="form-control input-md" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Apellido Materno:" for="personaApellido2" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaApellido2" value="#{personaBean.persona.personaApellido2}" title="PersonaApellido2" styleClass="form-control input-md" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Fecha Nacimiento:" for="personaFechaNacimiento" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaFechaNacimiento" value="#{personaBean.persona.personaFechaNacimiento}" styleClass="form-control input-md" title="PersonaFechaNacimiento" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </p:inputText>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Telefono:" for="personaTelefono" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaTelefono" value="#{personaBean.persona.personaTelefono}" title="PersonaTelefono" styleClass="form-control input-md" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Celular:" for="personaCelular" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaCelular" value="#{personaBean.persona.personaCelular}" title="PersonaCelular" styleClass="form-control input-md" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Direccion:" for="personaDireccion" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaDireccion" value="#{personaBean.persona.personaDireccion}" title="PersonaDireccion" styleClass="form-control input-md" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Email:" for="personaEmail" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:inputText id="personaEmail" value="#{personaBean.persona.personaEmail}" title="PersonaEmail" styleClass="form-control input-md" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <p:outputLabel value="Prevision:" for="previsionCodigo" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <h:selectOneMenu id="previsionCodigo"  styleClass="form-control" 
+                                                         value="#{personaBean.prevision}" required="true" converter="PrevisionConverter">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{personaBean.previsiones}" 
+                                                           var="previsiones" itemLabel="#{previsiones.previsionNombre}"
+                                                           itemValue="#{previsiones.previsionCodigo}" />
+                                            <p:ajax process="@this" listener="#{personaBean.onChangeSelect()}" event="change" 
+                                                    update=":formCreatePersona:tipoprevisionCodigo"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Tipo prevision:" for="tipoprevisionCodigo" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <h:selectOneMenu id="tipoprevisionCodigo"  styleClass="form-control" 
+                                                         value="#{personaBean.persona.tipoprevisionCodigo}" required="true" converter="tipoPrevisionConverter">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{personaBean.tipoPrevisiones}" 
+                                                           var="tprevisiones" itemLabel="#{tprevisiones.tipoprevisionNombre}"
+                                                           itemValue="#{tprevisiones.previsionCodigo}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel value="Sexo:" for="sexoCodigo" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <h:selectOneMenu id="sexoCodigo"  styleClass="form-control" 
+                                                         value="#{personaBean.persona.sexoCodigo}" required="true" converter="tipoPrevisionConverter">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{personaBean.sexos}" 
+                                                           var="sexos" itemLabel="#{sexos.sexoDescripcion}"
+                                                           itemValue="#{sexos.sexoCodigo}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Religion:" for="religionCodigo" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <h:selectOneMenu id="religionCodigo"  styleClass="form-control" 
+                                                         value="#{personaBean.persona.religionCodigo}" required="true" converter="tipoPrevisionConverter">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{personaBean.religiones}" 
+                                                           var="religion" itemLabel="#{religion.religionNombre}"
+                                                           itemValue="#{religion.religionCodigo}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Pueblo Originario:" for="pueblooriginarioCodigo" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <h:selectOneMenu id="pueblooriginarioCodigo"  styleClass="form-control" 
+                                                         value="#{personaBean.persona.pueblooriginarioCodigo}" required="true" converter="tipoPrevisionConverter">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{personaBean.religiones}" 
+                                                           var="religion" itemLabel="#{religion.religionNombre}"
+                                                           itemValue="#{religion.religionCodigo}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Nivel Educacional:" for="niveleducacionalCodigo" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:selectOneMenu id="niveleducacionalCodigo" value="#{personaBean.persona.niveleducacionalCodigo}" styleClass="form-control input-md" >
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItems value="#{fixme}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Nacionalidad:" for="nacionalidad" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:selectOneMenu id="nacionalidad" value="#{personaBean.persona.nacionalidad}" styleClass="form-control input-md" required="true" requiredMessage="The Nacionalidad field is required.">
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItems value="#{fixme}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Estado Civil:" for="estadocivilCodigo" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:selectOneMenu id="estadocivilCodigo" value="#{personaBean.persona.estadocivilCodigo}" styleClass="form-control input-md" >
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItems value="#{fixme}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p:outputLabel value="Comuna:" for="comunaCodigo" styleClass="col-md-4 control-label" />
+                                    <div class="col-md-4">
+                                        <p:selectOneMenu id="comunaCodigo" value="#{personaBean.persona.comunaCodigo}" styleClass="form-control input-md" >
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItems value="#{fixme}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"></label>
+                                    <div class="col-md-4">
+                                        <p:commandButton value="Guardar" actionListener="#{fixme}" update="growl" styleClass="btn btn-success" />
+                                        <p:commandButton value="Cancelar" onclick="volver();" styleClass="btn btn-danger" />
+                                    </div>
+                                </div>
+                            </h:form>
+                        </fieldset>
+                    </div>
+
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

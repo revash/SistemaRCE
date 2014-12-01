@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>RCE ADMINISTRACION</title>
+        <script type="text/javascript">
+            function ocultar(xhr, status, args) {
+                if (args.creado) {
+                    PF(args.dialog).hide();
+                }
+            }
+            function ocultar2(xhr, status, args) {
+                if (args.creado) {
+                    document.getElementById(args.formulario).reset();
+                    PF('dlg2').hide();
+
+                }
+            }
+        </script>
+        <style type="text/css">
+            .ui-layout-north {
+                z-index:20 !important;
+                overflow:visible !important;;
+            }
+
+            .ui-layout-north .ui-layout-unit-content {
+                overflow:visible !important;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+
+            <p:layoutUnit id="top" position="north" size="50">
+                <p:menubar>
+                    <p:submenu label="Localidades" icon="ui-icon-document">
+                        <p:menuitem value="Nacionalidades" url="#" />
+                        <p:menuitem value="Regiones" url="#" />
+                        <p:menuitem value="Ciudades" url="#" />
+                        <p:menuitem value="Comunas" url="#" />
+                    </p:submenu>
+
+                    <p:submenu label="Datos Demograficos" icon="ui-icon-pencil">
+                        <p:menuitem value="Sexos" url="#{applicationBean.baseUrl}/Administrador/paginasMantenedores/ListaSexos.xhtml" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
+                        <p:menuitem value="Religiones" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+                        <p:menuitem value="Niveles Educacionales" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+                        <p:menuitem value="Estados Civiles" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+                        <p:menuitem value="Pueblos Originarios" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+                    </p:submenu>
+
+                    <p:submenu label="Previsiones" icon="ui-icon-help">
+                        <p:menuitem value="Previsiones" url="#" />
+                        <p:menuitem value="Tipo Previsiones" url="#" />
+                    </p:submenu>
+
+                    <p:submenu label="Personas" icon="ui-icon-help">
+                        <p:menuitem value="Mantenedor Personas" url="#" />
+                    </p:submenu>
+                </p:menubar>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="true" collapsible="true">
+                <ui:insert name="bottom">Bottom</ui:insert>
+            </p:layoutUnit> 
+
+            <p:layoutUnit position="west" size="250" header="Modulos" resizable="false" closable="true" collapsible="true">
+                <h:form>
+                    <p:menu toggleable="true">
+                        <p:submenu label="Modulo Personas">
+                            <p:menuitem value="Datos Demograficos"  icon="ui-icon-disk" 
+                                        url="#{applicationBean.baseUrl}/Administrador/AdminTemplate.xhtml" />
+                            <p:menuitem value="Profesionales"  icon="ui-icon-arrowrefresh-1-w"/>
+                        </p:submenu>
+                        <p:submenu label="Non-Ajax">
+                            <p:menuitem value="Delete" ajax="false" icon="ui-icon-close"/>
+                        </p:submenu>
+                        <p:submenu label="Navigations">
+                            <p:menuitem value="External" url="http://www.primefaces.org" icon="ui-icon-home"/>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </p:layoutUnit>
+
+
+            <p:layoutUnit position="center" id="content">
+                <ui:insert name="content"></ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+
+</html>

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+          
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SISTEMA RCE</title>
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+        
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div id="login-wraper">
+                
+                <h:form  styleClass="form-horizontal">
+                    <p:growl id="growl" showSummary="true" life="3000"  />  
+                    <legend><center>Ingreso al Sistema</center>
+                        <br/>
+                        <center>
+                            <span class="blue">Sistema RCE HBLT</span>
+                        </center>
+                    </legend>
+                    <div class="body" align="center">
+                        <div class="form-group">
+                            <p:outputLabel value="Rut" for="rut" styleClass="col-md-4 control-label"/>
+                            <div class="col-md-8">
+                                <p:inputText id="rut" value="#{profesionalBean.rut}" styleClass="form-control input-md" required="true"
+                                             requiredMessage="Debe ingresar un Rut Valido">
+                                    <p:ajax event="blur" update="growl" listener="#{profesionalBean.onValidaRut()}"/>
+                                    <p:ajax event="blur" update="rut" listener="#{profesionalBean.onFormateaRut()}"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p:outputLabel value="Clave" for="pass" styleClass="col-md-4 control-label"/>
+                            <div class="col-md-8">
+                                <p:password id="pass" value="#{profesionalBean.clave}" styleClass="form-control input-md" required="true"
+                                            requiredMessage="Debe ingresar una Contraseña"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <p:commandButton value="Login" actionListener="#{profesionalBean.login()}" update="growl" styleClass="btn btn-success" />
+                        
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
+
